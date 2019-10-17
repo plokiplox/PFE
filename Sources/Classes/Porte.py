@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 Created on Oct. 17, 2019
 
@@ -5,10 +6,12 @@ Created on Oct. 17, 2019
 '''
 
 from Classes.enums import EtatPorte
+from Classes.enums import Direction
 from Classes.Actionneurs import Moteur
 from Classes.Capteurs import Switch
+import time
 
-class Porte(object):
+class Porte:
     '''
     Classe pour contrôler la porte du poulailler
     '''
@@ -28,4 +31,20 @@ class Porte(object):
     def GetEtat(self):
         return self.Etat
     
-    
+    def Ouvrir(self):
+        self.Moteur_porte.SetSens(Direction.Ouverture)
+        self.Moteur_porte.Marche()
+        
+        while not self.SwitchHaut.LectureCapteur() == True:
+            time.sleep(0.5)
+        else:
+            self.Moteur_porte.Arret()
+        
+    def Fermer(self):
+        self.Moteur_porte.SetSens(Direction.Fermeture)
+        self.Moteur_porte.Marche()
+        
+        while not self.SwitchBas.LectureCapteur() == True:
+            time.sleep(0.5)
+        else:
+            self.Moteur_porte.Arret()
