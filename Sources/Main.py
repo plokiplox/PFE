@@ -3,14 +3,14 @@ Created on Oct. 15, 2019
 
 @author: philip
 '''
-from Classes.Moteur import Moteur
+from Classes.Porte import Porte
 
 if __name__ == '__main__':
     
-    A = Moteur(23)
+    A = Porte(23,1,2)
     
-    print(A.GetIO())
     print(A.GetEtat())
-    print(A.GetSens())
+    print(A.Moteur_porte.GetIO())
+    print(A.SwitchHaut.GetIO())
     
     pass

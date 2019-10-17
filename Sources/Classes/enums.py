@@ -13,3 +13,11 @@ class EtatActionneurs(Enum):
 class Direction(Enum):
     Ouverture = True
     Fermeture = False
+    
+class EtatPorte(Enum):
+    Ouvert = True
+    Ferme = False
+    
+class Niveau(Enum):
+    Haut = True
+    Bas = False
