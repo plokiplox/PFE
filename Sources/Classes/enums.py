@@ -19,6 +19,6 @@ class EtatPorte(Enum):
     Ouvert = True
     Ferme = False
     
-class Niveau(Enum):
+class Niveaux(Enum):
     Haut = True
     Bas = False
