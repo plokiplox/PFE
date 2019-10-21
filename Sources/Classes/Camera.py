@@ -5,7 +5,7 @@ Created on Oct. 17, 2019
 @author: philip
 '''
 
-#from Library.picamera import PiCamera
+#from picamera import PiCamera
 
 class Camera:#(PiCamera):
     '''

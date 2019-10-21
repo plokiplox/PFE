@@ -38,6 +38,10 @@ class Thermostat(threading.Thread):
         self.Heater.Arret()
         
     def Actions(self):
+        self.threadtest()
+        pass
+    
+    def threadtest(self):
         print("Thread Started")
         t=0
         while t != 10:
