@@ -30,6 +30,8 @@ class Poulailler:
         '''
     
     def InitialisationThreads(self):
+        self._Thermostat.start()
+        self._Thermostat.join()
         pass
     
     

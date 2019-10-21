@@ -3,6 +3,12 @@
 Created on Oct. 15, 2019
 
 @author: philip
+
+TODO
+Connecter les bonnes classes de GPIOZero aux capteurs correspondants
+avec les adresses IO données aux constructeurs. Sans ça nou ne pourrons
+pas tester les actionneurs.
+
 '''
 
 from Classes.enums import EtatActionneurs
@@ -81,7 +87,6 @@ class ElementChauffant(Actionneurs):
         Constructeur
         '''
         Actionneurs.__init__(self, ioNumber)
-        self.SetSens(Direction.Fermeture)
     
     def Marche(self):
         self.SetEtat(EtatActionneurs.Marche)

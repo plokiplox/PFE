@@ -8,21 +8,24 @@ Created on Oct. 21, 2019
 from Classes.Actionneurs import ElementChauffant
 from Classes.Capteurs import Temperature
 import time
+import threading
 
-class Thermostat:
+class Thermostat(threading.Thread):
     '''
     Classe pour contrôler la chaleur des pondoires et perchoires du poulailler
     '''
     # Degré Celsius
     Tempearture_Min = 18
     Temperature_Max = 25
+    Temp = 0
     # Secondes
-    Delai_temp = 2
+    Delai_temp = 60
 
     def __init__(self, IO_CapteurTemperature, IO_ElementChauffant):
         '''
         Constructeur
         '''
+        threading.Thread.__init__(self, target=self.Actions())
         self.Heater = ElementChauffant(IO_ElementChauffant)
         self.CTemp = Temperature(IO_CapteurTemperature)
     
@@ -33,3 +36,14 @@ class Thermostat:
             time.sleep(self.Delai_temp)
         
         self.Heater.Arret()
+        
+    def Actions(self):
+        print("Thread Started")
+        t=0
+        while t != 10:
+            print(t," Seconds")
+            time.sleep(1)
+            t +=1
+            continue
+        print("Thread Finished")
+        pass

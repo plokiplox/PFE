@@ -3,6 +3,12 @@
 Created on Oct. 17, 2019
 
 @author: philip
+
+TODO
+Connecter les bonnes classes de GPIOZero aux capteurs correspondants
+avec les adresses IO données aux constructeurs. Sans ça nou ne pourrons
+pas tester les capteurs.
+
 '''
 
 class Capteurs(object):
