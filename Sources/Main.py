@@ -5,14 +5,11 @@ Created on Oct. 15, 2019
 
 @author: philip
 '''
-from Classes.Porte import Porte
+from Classes.Poulailler import Poulailler
 
 if __name__ == '__main__':
     
-    A = Porte(23,1,2)
-    
-    print(A.GetEtat())
-    print(A.Moteur_porte.GetIO())
-    print(A.SwitchHaut.GetIO())
+    A = Poulailler()
+    A.InitialisationThreads()
     
     pass
