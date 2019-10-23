@@ -34,12 +34,25 @@ class Thermostat(threading.Thread):
         
         while self.CTemp.GetTemperature() < self.Temperature_Max:
             time.sleep(self.Delai_temp)
+            continue
         
         self.Heater.Arret()
         
     def Actions(self):
+        #self.BoucleAction()
         self.threadtest()
         pass
+    
+    def BoucleAction(self):
+        
+        while True:
+            time.sleep(self.Delai_temp)
+            if self.CTemp.GetTemperature() < self.Tempearture_Min:
+                self.Heater.Marche()
+                while self.CTemp.GetTemperature() < self.Temperature_Max:
+                    time.sleep(self.Delai_temp)
+                    continue
+            continue
     
     def threadtest(self):
         print("Thread Started")

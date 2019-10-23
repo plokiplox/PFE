@@ -30,7 +30,7 @@ class Capteurs(object):
         return self.IO
     
     def LectureCapteur(self):
-        pass
+        return True
     
 class Temperature(Capteurs):
     '''

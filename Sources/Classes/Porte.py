@@ -9,20 +9,25 @@ from Classes.enums import EtatPorte
 from Classes.enums import Direction
 from Classes.Actionneurs import Moteur
 from Classes.Capteurs import Switch
+from Classes.Capteurs import Obscurite
 import time
+import threading
 
-class Porte:
+class Porte(threading.Thread):
     '''
     Classe pour contrôler la porte du poulailler
     '''
+    Delai_temp = 300
 
-    def __init__(self, IO_moteur, IO_switch_haut, IO_switch_bas):
+    def __init__(self, IO_moteur, IO_switch_haut, IO_switch_bas, IO_capteur_obscurite):
         '''
         Constructeur
         '''
+        threading.Thread.__init__(self, target=self.Actions())
         self.Moteur_porte = Moteur(IO_moteur)
         self.SwitchHaut = Switch(IO_switch_haut)
         self.SwitchBas = Switch(IO_switch_bas)
+        self.CObscurite = Obscurite(IO_capteur_obscurite)
         self.SetEtat(EtatPorte.Ferme)
         
     def SetEtat(self, e):
@@ -48,3 +53,20 @@ class Porte:
             time.sleep(0.5)
         else:
             self.Moteur_porte.Arret()
+            
+    def Actions(self):
+        self.BoucleAction()
+        pass
+    
+    def BoucleAction(self):
+        
+        while True:
+            time.sleep(self.Delai_temp)
+            
+            if not self.CObscurite.LectureCapteur() and self.Etat == EtatPorte.Ferme:
+                self.Ouvrir()
+                
+            if self.CObscurite.LectureCapteur() and self.Etat == EtatPorte.Ouvert:
+                self.Fermer()
+                
+            continue
