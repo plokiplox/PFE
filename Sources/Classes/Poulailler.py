@@ -15,11 +15,12 @@ from Classes.Pondoire import Pondoire
 class Poulailler:
     '''
     Classe qui inclu toutes les autres classes qui forment un poulailler
+    La porte ne dois pas ouvrir si le thermomètre de dehors est à -5 degré
     '''
     
     _Camera = Camera()
     _Thermostat = Thermostat(1,2)
-    _Porte = Porte(3,4,5)
+    _Porte = Porte(3,4,5,6)
     _Distribution_Eau = Distribution_Eau(6,7,8,9,10,11,12)
     _Distribution_Nourriture = Distribution_Nourriture(13,14,15)
     _Pondoires = [Pondoire(16),Pondoire(17)]

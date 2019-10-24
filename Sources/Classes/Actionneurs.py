@@ -114,3 +114,24 @@ class ElectroVanne(Actionneurs):
     
     def Fermeture(self):
         self.SetEtat(EtatPorte.Ferme)
+        
+class Sirene(Actionneurs):
+    '''
+    --------------
+    Classe pour les objets de type Sirene, classe enfant de la classe Actionneurs.
+    --------------
+    Variables
+    --------------
+    '''
+
+    def __init__(self, ioNumber):
+        '''
+        Constructeur
+        '''
+        Actionneurs.__init__(self, ioNumber)
+    
+    def Marche(self):
+        self.SetEtat(EtatPorte.Ouvert)
+    
+    def Arret(self):
+        self.SetEtat(EtatPorte.Ferme)

@@ -9,6 +9,8 @@ Connecter les bonnes classes de GPIOZero aux capteurs correspondants
 avec les adresses IO données aux constructeurs. Sans ça nou ne pourrons
 pas tester les capteurs.
 
+Obscurité = 
+
 '''
 
 class Capteurs(object):
@@ -80,6 +82,7 @@ class Obscurite(Capteurs):
         '''
         Constructeur
         '''
+        
         Capteurs.__init__(self, ioNumber)
         
 class Niveau(Capteurs):

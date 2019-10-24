@@ -8,7 +8,7 @@ Created on Oct. 21, 2019
 from Classes.enums import Niveaux
 from Classes.Actionneurs import Moteur
 from Classes.Capteurs import Niveau
-
+from Classes.Actionneurs import Sirene
 import time
 
 class Distribution_Nourriture:
@@ -20,13 +20,14 @@ class Distribution_Nourriture:
     # Compté en secondes 
     Quantite_Nourriture = 5
 
-    def __init__(self, IO_Moteur, IO_CNiveau_Haut, IO_CNiveau_Bas):
+    def __init__(self, IO_Moteur, IO_CNiveau_Haut, IO_CNiveau_Bas, IO_Sirene):
         '''
         Constructeur
         '''
         self.Moteur = Moteur(IO_Moteur)
         self.CNiveau_Haut = Niveau(IO_CNiveau_Haut)
         self.CNiveau_Bas = Niveau(IO_CNiveau_Bas)
+        self.Sirene = Sirene(IO_Sirene)
         
     def SetQuantite(self, Secondes):
         self.Quantite_Nourriture=Secondes
