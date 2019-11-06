@@ -8,8 +8,7 @@ Created on Oct. 17, 2019
 from Classes.enums import EtatPorte
 from Classes.enums import Direction
 from Classes.Actionneurs import Moteur
-from Classes.Capteurs import Switch
-from Classes.Capteurs import Obscurite
+from Classes.Capteurs import Switch, Obscurite, Temperature
 import time
 import threading
 
@@ -20,7 +19,7 @@ class Porte(threading.Thread):
     '''
     Delai_temp = 300
 
-    def __init__(self, IO_moteur, IO_switch_haut, IO_switch_bas, IO_capteur_obscurite):
+    def __init__(self, IO_moteur, IO_switch_haut, IO_switch_bas, IO_capteur_obscurite, IO_temperature_dehors):
         '''
         Constructeur
         '''
@@ -29,6 +28,7 @@ class Porte(threading.Thread):
         self.SwitchHaut = Switch(IO_switch_haut)
         self.SwitchBas = Switch(IO_switch_bas)
         self.CObscurite = Obscurite(IO_capteur_obscurite)
+        self.CTemperature = Temperature(IO_temperature_dehors)
         self.SetEtat(EtatPorte.Ferme)
         
     def SetEtat(self, e):

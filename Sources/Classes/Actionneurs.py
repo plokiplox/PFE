@@ -11,9 +11,8 @@ pas tester les actionneurs.
 
 '''
 
-from Classes.enums import EtatActionneurs
-from Classes.enums import Direction
-from Classes.enums import EtatPorte
+from Classes.enums import EtatActionneurs, Direction, EtatPorte
+from gpiozero import Motor, LED
 
 class Actionneurs:
     '''

@@ -13,6 +13,8 @@ Obscurité =
 
 '''
 
+from gpiozero import Button, LightSensor, MotionSensor
+
 class Capteurs(object):
     '''
     Classe mère pourt les capteurs
@@ -73,7 +75,7 @@ class Presence(Capteurs):
         '''
         Capteurs.__init__(self, ioNumber)
         
-class Obscurite(Capteurs):
+class Obscurite(LightSensor):
     '''
     Classe pour les capteurs d'obscurité
     '''
@@ -82,8 +84,10 @@ class Obscurite(Capteurs):
         '''
         Constructeur
         '''
+        LightSensor.__init__(self, ioNumber)
         
-        Capteurs.__init__(self, ioNumber)
+    def LectureCapteur(self):
+        return self.light_detected
         
 class Niveau(Capteurs):
     '''

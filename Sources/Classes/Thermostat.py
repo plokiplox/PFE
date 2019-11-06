@@ -18,6 +18,7 @@ class Thermostat(threading.Thread):
     Tempearture_Min = 18
     Temperature_Max = 25
     Temp = 0
+    
     # Secondes
     Delai_temp = 60
 
