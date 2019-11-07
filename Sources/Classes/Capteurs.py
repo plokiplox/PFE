@@ -40,6 +40,7 @@ class Capteurs(object):
 class Temperature(Capteurs):
     '''
     Classe pour les capteurs de température de humidité
+    TODO
     '''
     sensor = Adafruit_DHT.DHT11
     
