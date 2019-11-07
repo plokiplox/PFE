@@ -6,22 +6,21 @@ Created on Oct. 15, 2019
 @author: philip
 '''
 #from Classes.Poulailler import Poulailler
-from Classes.Capteurs import Switch
+from Classes.Capteurs import Presence
+import time
 
 if __name__ == '__main__':
     
     #A = Poulailler()
     #A.InitialisationThreads()
     
-    Haut = Switch(27, 0.2)
-    Bas = Switch(17 , 0.2)
-    
+    motion = Presence(23)
     while True:
-        if Haut.LectureCapteur():
-            print("Porte Ouverte")
-        if Bas.LectureCapteur():
-            print("Porte Fermee")
+        if motion.motion_detected:
+            print("Motion Detected")
+        else:
+            print("No Motion")
+            
+        time.sleep(1)
         continue
-    
-    print("Arret du programme")
     pass

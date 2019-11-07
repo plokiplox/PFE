@@ -77,7 +77,7 @@ class Presence(MotionSensor):
         '''
         Constructeur
         '''
-        MotionSensor.__init__(self, pin=ioNumber,pull_up=False,sample_rate=10)
+        MotionSensor.__init__(self, pin=ioNumber,pull_up=False, queue_len=1, threshold=0.5)
     
     def LectureCapteur(self):
         return self.motion_detected
