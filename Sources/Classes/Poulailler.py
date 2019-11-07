@@ -20,7 +20,7 @@ class Poulailler:
     
     _Camera = Camera()
     _Thermostat = Thermostat(1,2)
-    _Porte = Porte(3,4,5,6)
+    _Porte = Porte(3,27,17,6)
     _Distribution_Eau = Distribution_Eau(6,7,8,9,10,11,12)
     _Distribution_Nourriture = Distribution_Nourriture(13,14,15)
     _Pondoires = [Pondoire(16),Pondoire(17)]

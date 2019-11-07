@@ -53,18 +53,22 @@ class Temperature(Capteurs):
     def GetHumidity(self):
         pass
     
-class Switch(Capteurs):
+class Switch(Button):
     '''
     Classe pour les switch de fin de course
+    
     '''
     
-    def __init__(self, ioNumber):
+    def __init__(self, ioNumber, time_held):
         '''
         Constructeur
         '''
-        Capteurs.__init__(self, ioNumber)
+        Button.__init__(self, pin=ioNumber,pull_up=False, hold_time=time_held)
         
-class Presence(Capteurs):
+    def LectureCapteur(self):
+        return self.is_held
+        
+class Presence(MotionSensor):
     '''
     Classe pour les capteurs de présence (pour compter le nombre d'oeufs)
     '''
@@ -73,7 +77,10 @@ class Presence(Capteurs):
         '''
         Constructeur
         '''
-        Capteurs.__init__(self, ioNumber)
+        MotionSensor.__init__(self, pin=ioNumber,pull_up=False,sample_rate=10)
+    
+    def LectureCapteur(self):
+        return self.motion_detected
         
 class Obscurite(LightSensor):
     '''
