@@ -134,3 +134,16 @@ class Sirene(Actionneurs):
     
     def Arret(self):
         self.SetEtat(EtatPorte.Ferme)
+        
+class LumiereLED(LED):
+    Etat = False
+    def __init__(self, IONumber):
+        LED.__init__(self, pin=IONumber)
+        
+    def Allumer(self):
+        Etat = True
+        self.on()
+        
+    def Fermer(self):
+        Etat = False
+        self.off()
