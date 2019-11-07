@@ -14,6 +14,7 @@ Obscurité =
 '''
 
 from gpiozero import Button, LightSensor, MotionSensor
+import Adafruit_DHT
 
 class Capteurs(object):
     '''
@@ -40,6 +41,7 @@ class Temperature(Capteurs):
     '''
     Classe pour les capteurs de température de humidité
     '''
+    sensor = Adafruit_DHT.DHT11
     
     def __init__(self, ioNumber):
         '''
@@ -94,7 +96,7 @@ class Obscurite(LightSensor):
         LightSensor.__init__(self, ioNumber)
         
     def LectureCapteur(self):
-        return self.light_detected
+        return not self.light_detected
         
 class Niveau(Capteurs):
     '''
