@@ -14,14 +14,11 @@ import threading
 class Porte(threading.Thread):
     '''
     Classe pour contrôler la porte du poulailler
+    Fermer la porte dû à la température avec les mêmes temps qu'on donne la nourriture (variables globales)
     '''
     Delai_temp = 300
 
-<<<<<<< Upstream, based on Pi_Only
-    def __init__(self, IO_moteur, IO_switch_haut, IO_switch_bas, IO_capteur_obscurite, IO_temperature_dehors):
-=======
     def __init__(self, IO_moteur, IO_switch_haut, IO_switch_bas, IO_capteur_obscurite, IO_capteur_temperature):
->>>>>>> 801a22e Thread distribution nourriture fait
         '''
         Constructeur
         '''
@@ -30,11 +27,7 @@ class Porte(threading.Thread):
         self.SwitchHaut = Switch(IO_switch_haut)
         self.SwitchBas = Switch(IO_switch_bas)
         self.CObscurite = Obscurite(IO_capteur_obscurite)
-<<<<<<< Upstream, based on Pi_Only
-        self.CTemperature = Temperature(IO_temperature_dehors)
-=======
         self.CTemperature = Temperature(IO_capteur_temperature)
->>>>>>> 801a22e Thread distribution nourriture fait
         self.SetEtat(EtatPorte.Ferme)
         
     def SetEtat(self, e):
@@ -62,10 +55,6 @@ class Porte(threading.Thread):
             self.Moteur_porte.Arret()
             
     def Actions(self):
-        '''
-        TODO:
-        -Fermer la porte dû à la température avec les mêmes temps qu'on donne la nourriture (variables globales)
-        '''
         while True:
             time.sleep(self.Delai_temp)
             
