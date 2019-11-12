@@ -45,7 +45,9 @@ class Poulailler:
             i.join()
             continue
         
-        
+        # Init du thread de distribution d'eau
+        self._Distribution_Eau.start()
+        self._Distribution_Eau.join()
         
         pass
     

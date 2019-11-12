@@ -40,8 +40,7 @@ class Thermostat(threading.Thread):
         self.Heater.Arret()
         
     def Actions(self):
-        #self.BoucleAction()
-        self.threadtest()
+        self.BoucleAction()
         pass
     
     def BoucleAction(self):
@@ -54,14 +53,3 @@ class Thermostat(threading.Thread):
                     time.sleep(self.Delai_temp)
                     continue
             continue
-    
-    def threadtest(self):
-        print("Thread Started")
-        t=0
-        while t != 10:
-            print(t," Seconds")
-            time.sleep(1)
-            t +=1
-            continue
-        print("Thread Finished")
-        pass
