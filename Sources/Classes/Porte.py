@@ -14,7 +14,6 @@ import threading
 class Porte(threading.Thread):
     '''
     Classe pour contrôler la porte du poulailler
-    Fermer la porte dû à la température avec les mêmes temps qu'on donne la nourriture (variables globales)
     '''
     Delai_temp = 300
 
@@ -63,6 +62,10 @@ class Porte(threading.Thread):
             self.Moteur_porte.Arret()
             
     def Actions(self):
+        '''
+        TODO:
+        -Fermer la porte dû à la température avec les mêmes temps qu'on donne la nourriture (variables globales)
+        '''
         while True:
             time.sleep(self.Delai_temp)
             
