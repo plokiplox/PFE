@@ -5,8 +5,7 @@ Created on Oct. 17, 2019
 @author: philip
 '''
 
-from Classes.enums import EtatPorte
-from Classes.enums import Direction
+from Classes.enums import EtatPorte, Direction
 from Classes.Actionneurs import Moteur
 from Classes.Capteurs import Switch, Obscurite, Temperature
 import time
@@ -19,7 +18,11 @@ class Porte(threading.Thread):
     '''
     Delai_temp = 300
 
+<<<<<<< Upstream, based on Pi_Only
     def __init__(self, IO_moteur, IO_switch_haut, IO_switch_bas, IO_capteur_obscurite, IO_temperature_dehors):
+=======
+    def __init__(self, IO_moteur, IO_switch_haut, IO_switch_bas, IO_capteur_obscurite, IO_capteur_temperature):
+>>>>>>> 801a22e Thread distribution nourriture fait
         '''
         Constructeur
         '''
@@ -28,7 +31,11 @@ class Porte(threading.Thread):
         self.SwitchHaut = Switch(IO_switch_haut)
         self.SwitchBas = Switch(IO_switch_bas)
         self.CObscurite = Obscurite(IO_capteur_obscurite)
+<<<<<<< Upstream, based on Pi_Only
         self.CTemperature = Temperature(IO_temperature_dehors)
+=======
+        self.CTemperature = Temperature(IO_capteur_temperature)
+>>>>>>> 801a22e Thread distribution nourriture fait
         self.SetEtat(EtatPorte.Ferme)
         
     def SetEtat(self, e):
@@ -56,11 +63,6 @@ class Porte(threading.Thread):
             self.Moteur_porte.Arret()
             
     def Actions(self):
-        self.BoucleAction()
-        pass
-    
-    def BoucleAction(self):
-        
         while True:
             time.sleep(self.Delai_temp)
             
