@@ -39,11 +39,6 @@ class Thermostat(threading.Thread):
         self.Heater.Arret()
         
     def Actions(self):
-        self.BoucleAction()
-        pass
-    
-    def BoucleAction(self):
-        
         while True:
             time.sleep(self.Delai_temp)
             if self.CTemp.GetTemperature() < self.Tempearture_Min:

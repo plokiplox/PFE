@@ -5,11 +5,9 @@ Created on Oct. 17, 2019
 @author: philip
 '''
 
-from Classes.enums import EtatPorte
-from Classes.enums import Direction
+from Classes.enums import EtatPorte, Direction
 from Classes.Actionneurs import Moteur
-from Classes.Capteurs import Switch
-from Classes.Capteurs import Obscurite
+from Classes.Capteurs import Switch, Obscurite, Temperature
 import time
 import threading
 
@@ -20,7 +18,7 @@ class Porte(threading.Thread):
     '''
     Delai_temp = 300
 
-    def __init__(self, IO_moteur, IO_switch_haut, IO_switch_bas, IO_capteur_obscurite):
+    def __init__(self, IO_moteur, IO_switch_haut, IO_switch_bas, IO_capteur_obscurite, IO_capteur_temperature):
         '''
         Constructeur
         '''
@@ -29,6 +27,7 @@ class Porte(threading.Thread):
         self.SwitchHaut = Switch(IO_switch_haut)
         self.SwitchBas = Switch(IO_switch_bas)
         self.CObscurite = Obscurite(IO_capteur_obscurite)
+        self.CTemperature = Temperature(IO_capteur_temperature)
         self.SetEtat(EtatPorte.Ferme)
         
     def SetEtat(self, e):
@@ -56,11 +55,6 @@ class Porte(threading.Thread):
             self.Moteur_porte.Arret()
             
     def Actions(self):
-        self.BoucleAction()
-        pass
-    
-    def BoucleAction(self):
-        
         while True:
             time.sleep(self.Delai_temp)
             
