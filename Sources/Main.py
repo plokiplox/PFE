@@ -5,11 +5,12 @@ Created on Oct. 15, 2019
 
 @author: philip
 '''
-from Classes.Poulailler import Poulailler
+
+import Classes.Serveur
 
 if __name__ == '__main__':
     
-    A = Poulailler()
-    A.InitialisationThreads()
+    A = Classes.Serveur()
+    A.__start__()
     
     pass

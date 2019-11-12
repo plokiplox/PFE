@@ -31,8 +31,22 @@ class Poulailler:
         '''
     
     def InitialisationThreads(self):
+        # Init du thread thermostat
         self._Thermostat.start()
         self._Thermostat.join()
+        
+        # Init du thread porte
+        self._Porte.start()
+        self._Porte.join()
+        
+        # Init des threads pondoire
+        for i in self._Pondoires:
+            i.start()
+            i.join()
+            continue
+        
+        
+        
         pass
     
     
