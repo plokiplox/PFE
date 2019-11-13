@@ -42,6 +42,7 @@ class Temperature(Capteurs):
     Classe pour les capteurs de température de humidité
     TODO
     '''
+    
     sensor = Adafruit_DHT.DHT11
     
     def __init__(self, ioNumber):
@@ -51,9 +52,13 @@ class Temperature(Capteurs):
         Capteurs.__init__(self, ioNumber)
         
     def GetTemperature(self):
+        humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.GetIO())
+        return temperature
         pass
     
     def GetHumidity(self):
+        humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.GetIO())
+        return humidity
         pass
     
 class Switch(Button):
