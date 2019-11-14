@@ -4,15 +4,15 @@ Created on Nov. 12, 2019
 @author: philip
 '''
 
-import Classes.Poulailler
+from Classes.Poulailler import Poulailler
 
-class Serveur:
+class Serveur(object):
     '''
     classdocs
     '''
-    _Poulailler = Classes.Poulailler()
+    _Poulailler = Poulailler()
 
-    def __init__(self, params):
+    def __init__(self):
         '''
         Constructor
         '''

@@ -21,7 +21,7 @@ class Thermostat(threading.Thread):
     Temp = 0
     
     # Secondes
-    Delai_temp = 10
+    Delai_temp = 5
 
     def __init__(self, IO_CapteurTemperature, IO_ElementChauffant):
         '''
@@ -30,7 +30,8 @@ class Thermostat(threading.Thread):
         #self.Heater = ElementChauffant(IO_ElementChauffant)
         self.Heater = LumiereLED(IO_ElementChauffant)
         self.CTemp = Temperature(IO_CapteurTemperature)
-        threading.Thread.__init__(self, target=self.Actions())
+        threading.Thread.__init__(self)
+        self.daemon = True
     
     def Rechauffer(self,t):
         self.Heater.Allumer()
@@ -53,3 +54,6 @@ class Thermostat(threading.Thread):
             else:
                 print("Temperature adequate")
             continue
+        
+    def run(self):
+        self.Actions()

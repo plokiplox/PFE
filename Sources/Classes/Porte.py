@@ -16,23 +16,24 @@ class Porte(threading.Thread):
     Classe pour contrôler la porte du poulailler
     Fermer la porte dû à la température avec les mêmes temps qu'on donne la nourriture (variables globales)
     '''
-    Delai_temp = 300
+    Delai_temp = 5
 
     def __init__(self, IO_moteur_forward, IO_moteur_backward, IO_switch_haut, IO_switch_bas, IO_capteur_obscurite, IO_capteur_temperature):
         '''
         Constructeur
         '''
-        threading.Thread.__init__(self, target=self.Actions())
         #self.Moteur_porte = Moteur(IO_moteur_forward,IO_moteur_backward)
         
         self.led_forward = LumiereLED(IO_moteur_forward)
         self.led_backward = LumiereLED(IO_moteur_backward)
         
-        self.SwitchHaut = Switch(IO_switch_haut)
-        self.SwitchBas = Switch(IO_switch_bas)
+        self.SwitchHaut = Switch(IO_switch_haut,0.2)
+        self.SwitchBas = Switch(IO_switch_bas,0.2)
         self.CObscurite = Obscurite(IO_capteur_obscurite)
         self.CTemperature = Temperature(IO_capteur_temperature)
         self.SetEtat(EtatPorte.Ferme)
+        threading.Thread.__init__(self)
+        self.daemon = True
         
     def SetEtat(self, e):
         self.Etat = e
@@ -43,6 +44,7 @@ class Porte(threading.Thread):
     def Ouvrir(self):
         #self.Moteur_porte.forward()
         self.led_forward.Allumer()
+        print("Ouverture porte")
         
         while not self.SwitchHaut.LectureCapteur() == True:
             time.sleep(0.5)
@@ -53,6 +55,7 @@ class Porte(threading.Thread):
         
     def Fermer(self):
         #self.Moteur_porte.backward()
+        print("Fermeture porte")
         self.led_backward.Allumer()
         
         while not self.SwitchBas.LectureCapteur() == True:
@@ -65,11 +68,15 @@ class Porte(threading.Thread):
     def Actions(self):
         while True:
             time.sleep(self.Delai_temp)
+            print("Porte prete")
             
-            if not self.CObscurite.LectureCapteur() and self.Etat == EtatPorte.Ferme:
+            if self.CObscurite.LectureCapteur() and self.Etat == EtatPorte.Ferme:
                 self.Ouvrir()
                 
-            if self.CObscurite.LectureCapteur() and self.Etat == EtatPorte.Ouvert:
+            if not self.CObscurite.LectureCapteur() and self.Etat == EtatPorte.Ouvert:
                 self.Fermer()
                 
             continue
+        
+    def run(self):
+        self.Actions()

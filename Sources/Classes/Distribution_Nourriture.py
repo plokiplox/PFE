@@ -32,7 +32,7 @@ class Distribution_Nourriture(threading.Thread):
         '''
         Constructeur
         '''
-        threading.Thread.__init__(self, target=self.Actions())
+        threading.Thread.__init__(self)
         self.Moteur = Moteur(IO_Moteur)
         self.CNiveau_Haut = Niveau(IO_CNiveau_Haut)
         self.CNiveau_Bas = Niveau(IO_CNiveau_Bas)
@@ -60,3 +60,6 @@ class Distribution_Nourriture(threading.Thread):
             else:
                 time.sleep(self.Delai_update_temps)
             continue
+        
+    def run(self):
+        self.Actions()

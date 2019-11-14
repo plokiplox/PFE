@@ -12,7 +12,7 @@ from Classes.Distribution_Eau import Distribution_Eau
 from Classes.Distribution_Nourriture import Distribution_Nourriture
 from Classes.Pondoire import Pondoire
 
-class Poulailler:
+class Poulailler(object):
     '''
     Classe qui inclu toutes les autres classes qui forment un poulailler
     La porte ne dois pas ouvrir si le thermomètre de dehors est à -5 degré
@@ -20,10 +20,10 @@ class Poulailler:
     
     #_Camera = Camera()
     _Thermostat = Thermostat(4,10)
-    #_Porte = Porte(9,11,27,17,22,26)
+    _Porte = Porte(9,11,27,17,22,26)
     #_Distribution_Eau = Distribution_Eau(6,7,8,9,10,11,12)
-    #_Distribution_Nourriture = Distribution_Nourriture(13,14,15)
-    #_Pondoires = [Pondoire(16),Pondoire(17)]
+    #_Distribution_Nourriture = Distribution_Nourriture(13,14,15,00)
+    _Pondoires = Pondoire(23)
 
     def __init__(self):
         '''
@@ -32,18 +32,19 @@ class Poulailler:
     
     def InitialisationThreads(self):
         # Init du thread thermostat
+        self._Porte.start()
         self._Thermostat.start()
-        self._Thermostat.join()
+        self._Pondoires.start()
         
-        # Init du thread porte
-        #self._Porte.start()
-        #self._Porte.join()
-        
-        # Init des threads pondoire
+        # Init des threads pondoire (boulce pour partir tous les pondoires)
         #for i in self._Pondoires:
         #    i.start()
-        #    i.join()
         #    continue
+        
+        self._Porte.join()
+        self._Thermostat.join()
+        self._Pondoires.join()
+
         
         # Init du thread de distribution d'eau
         #self._Distribution_Eau.start()

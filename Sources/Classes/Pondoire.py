@@ -20,7 +20,7 @@ class Pondoire(threading.Thread):
         '''
         Constructeur
         '''
-        threading.Thread.__init__(self, target=self.Actions())
+        threading.Thread.__init__(self)
         self.CPresence = Presence(IO_CapteurPresence)
         
     def ResetCompte(self):
@@ -33,6 +33,10 @@ class Pondoire(threading.Thread):
         while(True):
             if self.CPresence.LectureCapteur():
                 self.IncrementerCompte()
+                print("Compte ", self.Compte)
                 time.sleep(self.TimeoutCompteur)
             else:
                 continue
+            
+    def run(self):
+        self.Actions()

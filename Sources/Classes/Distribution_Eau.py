@@ -30,7 +30,7 @@ class Distribution_Eau(threading.Thread):
         '''
         Constructeur
         '''
-        threading.Thread.__init__(self, target=self.Actions())
+        threading.Thread.__init__(self)
         
         self.Vanne = ElectroVanne(IO_ElectroVanne)
         
@@ -77,4 +77,6 @@ class Distribution_Eau(threading.Thread):
                 if self.CTemp_Reservoire.GetTemperature() < self.Tempearture_Reservoire_Min:
                     self.RechaufferReservoire()
             continue
-        
+    
+    def run(self):
+        self.Actions()
