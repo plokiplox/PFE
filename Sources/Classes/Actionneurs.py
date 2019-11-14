@@ -43,7 +43,7 @@ class Actionneurs:
         return self.IO;
     
     
-class Moteur(Actionneurs):
+class Moteur(Motor):
     '''
     --------------
     Classe pour les objets de type Moteur, classe enfant de la classe Actionneurs.
@@ -53,24 +53,11 @@ class Moteur(Actionneurs):
     --------------
     '''
 
-    def __init__(self, ioNumber):
+    def __init__(self, IO_Forward, IO_Backward):
         '''
         Constructeur
         '''
-        Actionneurs.__init__(self, ioNumber)
-        self.SetSens(Direction.Fermeture)
-    
-    def SetSens(self, s):
-        self.Sens = s
-    
-    def GetSens(self):
-        return self.Sens
-    
-    def Marche(self):
-        self.SetEtat(EtatPorte.Ouvert)
-    
-    def Arret(self):
-        self.SetEtat(EtatPorte.Ferme)
+        Motor.__init__(self, IO_Forward,IO_Backward)
     
 class ElementChauffant(Actionneurs):
     '''

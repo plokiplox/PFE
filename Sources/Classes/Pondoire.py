@@ -6,7 +6,7 @@ Created on Oct. 21, 2019
 '''
 
 from Classes.Capteurs import Presence
-import threading.Thread
+import threading
 import time
 
 class Pondoire(threading.Thread):

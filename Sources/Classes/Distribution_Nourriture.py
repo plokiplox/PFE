@@ -9,7 +9,7 @@ from Classes.enums import Niveaux
 from Classes.Actionneurs import Moteur
 from Classes.Capteurs import Niveau
 from Classes.Actionneurs import Sirene
-import threading.Thread
+import threading
 import datetime
 import time
 

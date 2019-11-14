@@ -10,7 +10,7 @@ from Classes.Actionneurs import ElementChauffant
 from Classes.Actionneurs import ElectroVanne
 from Classes.Capteurs import Temperature
 from Classes.Capteurs import Niveau
-import threading.Thread
+import threading
 import time
 
 class Distribution_Eau(threading.Thread):
@@ -76,5 +76,5 @@ class Distribution_Eau(threading.Thread):
             else:
                 if self.CTemp_Reservoire.GetTemperature() < self.Tempearture_Reservoire_Min:
                     self.RechaufferReservoire()
-        continue
+            continue
         

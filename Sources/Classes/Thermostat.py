@@ -5,7 +5,7 @@ Created on Oct. 21, 2019
 @author: philip
 '''
 
-from Classes.Actionneurs import ElementChauffant
+from Classes.Actionneurs import ElementChauffant, LumiereLED
 from Classes.Capteurs import Temperature
 import time
 import threading
@@ -14,37 +14,42 @@ class Thermostat(threading.Thread):
     '''
     Classe pour contrôler la chaleur des pondoires et perchoires du poulailler
     '''
+    
     # Degré Celsius
-    Tempearture_Min = 18
-    Temperature_Max = 25
+    Tempearture_Min = 23
+    Temperature_Max = 24
     Temp = 0
     
     # Secondes
-    Delai_temp = 60
+    Delai_temp = 10
 
     def __init__(self, IO_CapteurTemperature, IO_ElementChauffant):
         '''
         Constructeur
         '''
-        threading.Thread.__init__(self, target=self.Actions())
-        self.Heater = ElementChauffant(IO_ElementChauffant)
+        #self.Heater = ElementChauffant(IO_ElementChauffant)
+        self.Heater = LumiereLED(IO_ElementChauffant)
         self.CTemp = Temperature(IO_CapteurTemperature)
+        threading.Thread.__init__(self, target=self.Actions())
     
-    def Rechauffer(self):
-        self.Heater.Marche()
-        
-        while self.CTemp.GetTemperature() < self.Temperature_Max:
+    def Rechauffer(self,t):
+        self.Heater.Allumer()
+        print("Allumer Heater")
+        while t < self.Temperature_Max:
+            t = self.CTemp.GetTemperature()
+            print("Temperature = ",t)
             time.sleep(self.Delai_temp)
             continue
-        
-        self.Heater.Arret()
+        print("Fermer Heater")
+        self.Heater.Fermer()
         
     def Actions(self):
         while True:
             time.sleep(self.Delai_temp)
-            if self.CTemp.GetTemperature() < self.Tempearture_Min:
-                self.Heater.Marche()
-                while self.CTemp.GetTemperature() < self.Temperature_Max:
-                    time.sleep(self.Delai_temp)
-                    continue
+            t = self.CTemp.GetTemperature()
+            print("Temperature = ",t)
+            if t <= self.Tempearture_Min:
+                self.Rechauffer(t)
+            else:
+                print("Temperature adequate")
             continue

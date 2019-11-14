@@ -17,6 +17,5 @@ class Serveur:
         Constructor
         '''
         
-        
     def __start__(self):
         self._Poulailler.InitialisationThreads()
