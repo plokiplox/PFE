@@ -6,9 +6,8 @@ Created on Oct. 21, 2019
 '''
 
 from Classes.enums import Niveaux
-from Classes.Actionneurs import Moteur
-from Classes.Capteurs import Niveau
-from Classes.Actionneurs import Sirene
+from Classes.Actionneurs import Moteur, Sirene, LumiereLED
+from Classes.Capteurs import Niveau, Switch
 import threading
 import datetime
 import time
@@ -24,38 +23,37 @@ class Distribution_Nourriture(threading.Thread):
     Heure_dernier_repas = 19 # 7 heure du soir
     
     # Compté en secondes 
-    Quantite_Nourriture = 30
-    Delai_entre_repas = 7200 # 2 heures = 7200 secondes
-    Delai_update_temps = 300
+    Quantite_Nourriture = 5
+    Delai_entre_repas = 10 # 2 heures = 7200 secondes
+    Delai_update_temps = 5
 
     def __init__(self, IO_Moteur, IO_CNiveau_Haut, IO_CNiveau_Bas, IO_Sirene):
         '''
         Constructeur
         '''
         threading.Thread.__init__(self)
-        self.Moteur = Moteur(IO_Moteur)
-        self.CNiveau_Haut = Niveau(IO_CNiveau_Haut)
-        self.CNiveau_Bas = Niveau(IO_CNiveau_Bas)
-        self.Sirene = Sirene(IO_Sirene)
+        self.Moteur = LumiereLED(IO_Moteur)
+        self.CNiveau_Haut = Switch(IO_CNiveau_Haut,0)
+        self.CNiveau_Bas = Switch(IO_CNiveau_Bas,0)
+        self.Sirene = LumiereLED(IO_Sirene)
         
     def SetQuantite(self, Secondes):
         self.Quantite_Nourriture=Secondes
         
     def DistribuerNourriture(self):
-        self.Moteur.Marche()
-        
-        while self.CTemp_Reservoire.GetTemperature() < self.Temperature_Max:
-            time.sleep(self.Delai_temp)
-        
-        self.Moteur.Arret()
+        self.Moteur.Allumer()
+        print("Distribution nourriture")
+        time.sleep(self.Quantite_Nourriture)
+        self.Moteur.Fermer()
+        print("Arreter la distribution de nourriture")
         
     def Actions(self):
         while True:
             now = datetime.datetime.now()
             if now.hour >= self.Heure_premier_repas and now.hour <= self.Heure_dernier_repas:
-                self.Sirene.Marche()
+                self.Sirene.Allumer()
                 self.DistribuerNourriture()
-                self.Sirene.Arret()
+                self.Sirene.Fermer()
                 time.sleep(self.Delai_entre_repas)
             else:
                 time.sleep(self.Delai_update_temps)

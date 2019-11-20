@@ -6,10 +6,8 @@ Created on Oct. 21, 2019
 '''
 
 from Classes.enums import Niveaux
-from Classes.Actionneurs import ElementChauffant
-from Classes.Actionneurs import ElectroVanne
-from Classes.Capteurs import Temperature
-from Classes.Capteurs import Niveau
+from Classes.Actionneurs import ElementChauffant, ElectroVanne, LumiereLED
+from Classes.Capteurs import Temperature, Niveau, Switch
 import threading
 import time
 
@@ -20,9 +18,11 @@ class Distribution_Eau(threading.Thread):
     
     Niveau_Eau = Niveaux.Haut
     # Degré Celsius
-    Tempearture_Reservoire_Min = 3
-    Temperature_Reservoire_Max = 8
+    Tempearture_Canalisation_Max = 25
+    Tempearture_Reservoire_Min = 23
+    Temperature_Reservoire_Max = 24
     # Secondes
+    Temps_Rechauffage_Canalisation = 10
     Delai_temps_heater = 5
     Delai_temps_remplissage = 1
 
@@ -32,49 +32,52 @@ class Distribution_Eau(threading.Thread):
         '''
         threading.Thread.__init__(self)
         
-        self.Vanne = ElectroVanne(IO_ElectroVanne)
+        self.Vanne = LumiereLED(IO_ElectroVanne)
         
-        self.Heater_Reservoire = ElementChauffant(IO_HeaterReservoire)
+        self.Heater_Reservoire = LumiereLED(IO_HeaterReservoire)
         self.CTemp_Reservoire = Temperature(IO_CTemp_Reservoire)
         
-        self.Heater_Canalisation = ElementChauffant(IO_HeaterCanalisation)
+        self.Heater_Canalisation = LumiereLED(IO_HeaterCanalisation)
         self.CTemp_Canalisation = Temperature(IO_CTemp_Canalisation)
         
-        self.CNiveau_Haut = Niveau(IO_CNiveau_Haut)
-        self.CNiveau_Bas = Niveau(IO_CNiveau_Bas)
+        self.CNiveau_Haut = Switch(IO_CNiveau_Haut,0)
+        self.CNiveau_Bas = Switch(IO_CNiveau_Bas,0)
         
     def RechaufferReservoire(self):
-        self.Heater_Reservoire.Marche()
+        self.Heater_Reservoire.Allumer()
         
-        while self.CTemp_Reservoire.GetTemperature() < self.Temperature_Max:
+        while self.CTemp_Reservoire.GetTemperature() < self.Temperature_Reservoire_Max:
             time.sleep(self.Delai_temps_heater)
         
-        self.Heater_Reservoire.Arret()
+        self.Heater_Reservoire.Fermer()
         
     def RechaufferCanalisation(self):
-        self.Heater_Canalisation.Marche()
-        
-        while self.CTemp_Canalisation.GetTemperature() < self.Temperature_Max:
-            time.sleep(self.Delai_temps_heater)
-        
-        self.Heater_Canalisation.Arret()
+        if self.CTemp_Canalisation.GetTemperature() < self.Tempearture_Canalisation_Max:
+            self.Heater_Canalisation.Allumer()
+            print("Rechauffer canalisation")
+            time.sleep(self.Temps_Rechauffage_Canalisation)
+            self.Heater_Canalisation.Fermer()
+            print("Arreter rechauffement canalisation")
+        else:
+            print("Trop chaud pour rechauffer canalisation")
+            pass
     
     def RemplirReservoire(self):
-        self.Vanne.Ouverture()
-        
+        self.Vanne.Allumer()
+        print("Remplir Reservoir")
         while not self.CNiveau_Haut.LectureCapteur():
             time.sleep(self.Delai_temps_remplissage)
-            
-        self.Vanne.Fermeture()
+        print("Reservoir plein")
+        self.Vanne.Fermer()
     
     def Actions(self):
         
         while True:
-            if not self.CNiveau_Bas:
+            if not self.CNiveau_Bas.LectureCapteur():
                 self.RechaufferCanalisation()
                 self.RemplirReservoire()
             else:
-                if self.CTemp_Reservoire.GetTemperature() < self.Tempearture_Reservoire_Min:
+                if self.CTemp_Reservoire.GetTemperature() <= self.Tempearture_Reservoire_Min:
                     self.RechaufferReservoire()
             continue
     

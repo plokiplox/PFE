@@ -68,7 +68,6 @@ class Porte(threading.Thread):
     def Actions(self):
         while True:
             time.sleep(self.Delai_temp)
-            print("Porte prete")
             
             if self.CObscurite.LectureCapteur() and self.Etat == EtatPorte.Ferme:
                 self.Ouvrir()

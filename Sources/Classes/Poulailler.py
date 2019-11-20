@@ -19,10 +19,20 @@ class Poulailler(object):
     '''
     
     #_Camera = Camera()
+    
+    # Thermostat(IO_CapteurTemperature, IO_ElementChauffant)
     _Thermostat = Thermostat(4,10)
+    
+    # Porte(IO_moteur_forward, IO_moteur_backward, IO_switch_haut, IO_switch_bas, IO_capteur_obscurite, IO_capteur_temperature)
     _Porte = Porte(9,11,27,17,22,26)
-    #_Distribution_Eau = Distribution_Eau(6,7,8,9,10,11,12)
-    #_Distribution_Nourriture = Distribution_Nourriture(13,14,15,00)
+    
+    # Distribution_Eau(IO_HeaterReservoire,IO_CTemp_Reservoire,IO_HeaterCanalisation, IO_CTemp_Canalisation, IO_ElectroVanne, IO_CNiveau_Haut, IO_CNiveau_Bas)
+    _Distribution_Eau = Distribution_Eau(6,4,5,26,12,19,13)
+    
+    # Distribution_Nourriture(IO_Moteur, IO_CNiveau_Haut, IO_CNiveau_Bas, IO_Sirene)
+    _Distribution_Nourriture = Distribution_Nourriture(16,8,7,24)
+    
+    # Pondoire(IO_CapteurPresence)
     _Pondoires = Pondoire(23)
 
     def __init__(self):
@@ -35,6 +45,8 @@ class Poulailler(object):
         self._Porte.start()
         self._Thermostat.start()
         self._Pondoires.start()
+        self._Distribution_Eau.start()
+        self._Distribution_Nourriture.start()
         
         # Init des threads pondoire (boulce pour partir tous les pondoires)
         #for i in self._Pondoires:
@@ -44,11 +56,8 @@ class Poulailler(object):
         self._Porte.join()
         self._Thermostat.join()
         self._Pondoires.join()
-
-        
-        # Init du thread de distribution d'eau
-        #self._Distribution_Eau.start()
-        #self._Distribution_Eau.join()
+        self._Distribution_Eau.join()
+        self._Distribution_Nourriture.join()
         
         pass
     
