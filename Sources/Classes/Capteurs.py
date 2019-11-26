@@ -13,8 +13,8 @@ Obscurité =
 
 '''
 
-from gpiozero import Button, LightSensor, MotionSensor
-import Adafruit_DHT
+#from gpiozero import Button, LightSensor, MotionSensor
+#import Adafruit_DHT
 
 class Capteurs(object):
     '''
@@ -43,7 +43,7 @@ class Temperature(Capteurs):
     TODO
     '''
     
-    sensor = Adafruit_DHT.DHT11
+    #sensor = Adafruit_DHT.DHT11
     
     def __init__(self, ioNumber):
         '''
@@ -52,16 +52,16 @@ class Temperature(Capteurs):
         Capteurs.__init__(self, ioNumber)
         
     def GetTemperature(self):
-        humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.GetIO())
-        return temperature
+        #humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.GetIO())
+        #return temperature
         pass
     
     def GetHumidity(self):
-        humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.GetIO())
-        return humidity
+        #humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.GetIO())
+        #return humidity
         pass
     
-class Switch(Button):
+class Switch(Capteurs):
     '''
     Classe pour les switch de fin de course
     
@@ -71,12 +71,14 @@ class Switch(Button):
         '''
         Constructeur
         '''
-        Button.__init__(self, pin=ioNumber,pull_up=False, hold_time=time_held)
+        Capteurs.__init__(self, ioNumber)
+        #Button.__init__(self, pin=ioNumber,pull_up=False, hold_time=time_held)
         
     def LectureCapteur(self):
-        return self.is_held
+        #return self.is_held
+        pass
         
-class Presence(MotionSensor):
+class Presence(Capteurs):
     '''
     Classe pour les capteurs de présence (pour compter le nombre d'oeufs)
     '''
@@ -85,12 +87,14 @@ class Presence(MotionSensor):
         '''
         Constructeur
         '''
-        MotionSensor.__init__(self, pin=ioNumber,pull_up=False, queue_len=1, threshold=0.5)
+        Capteurs.__init__(self, ioNumber)
+        #MotionSensor.__init__(self, pin=ioNumber,pull_up=False, queue_len=1, threshold=0.5)
     
     def LectureCapteur(self):
-        return self.motion_detected
+        #return self.motion_detected
+        pass
         
-class Obscurite(LightSensor):
+class Obscurite(Capteurs):
     '''
     Classe pour les capteurs d'obscurité
     '''
@@ -99,10 +103,12 @@ class Obscurite(LightSensor):
         '''
         Constructeur
         '''
-        LightSensor.__init__(self, ioNumber)
+        Capteurs.__init__(self, ioNumber)
+        #LightSensor.__init__(self, ioNumber)
         
     def LectureCapteur(self):
-        return not self.light_detected
+        #return not self.light_detected
+        pass
         
 class Niveau(Capteurs):
     '''

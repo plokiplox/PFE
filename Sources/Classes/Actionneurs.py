@@ -12,7 +12,7 @@ pas tester les actionneurs.
 '''
 
 from Classes.enums import EtatActionneurs, Direction, EtatPorte
-from gpiozero import Motor, LED
+# from gpiozero import Motor, LED
 
 class Actionneurs:
     '''
@@ -43,7 +43,7 @@ class Actionneurs:
         return self.IO;
     
     
-class Moteur(Motor):
+class Moteur(Actionneurs):
     '''
     --------------
     Classe pour les objets de type Moteur, classe enfant de la classe Actionneurs.
@@ -57,7 +57,8 @@ class Moteur(Motor):
         '''
         Constructeur
         '''
-        Motor.__init__(self, IO_Forward,IO_Backward)
+        Actionneurs.__init__(self, IO_Forward)
+        #Motor.__init__(self, IO_Forward,IO_Backward)
     
 class ElementChauffant(Actionneurs):
     '''
@@ -122,15 +123,17 @@ class Sirene(Actionneurs):
     def Arret(self):
         self.SetEtat(EtatPorte.Ferme)
         
-class LumiereLED(LED):
+        
+class LumiereLED(Actionneurs):
     Etat = False
     def __init__(self, IONumber):
-        LED.__init__(self, pin=IONumber)
+        Actionneurs.__init__(self, IONumber)
+        #LED.__init__(self, pin=IONumber)
         
     def Allumer(self):
         Etat = True
-        self.on()
+        #self.on()
         
     def Fermer(self):
         Etat = False
-        self.off()
+        #self.off()
