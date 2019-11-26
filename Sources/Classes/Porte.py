@@ -44,7 +44,7 @@ class Porte(threading.Thread):
     def Ouvrir(self):
         #self.Moteur_porte.forward()
         self.led_forward.Allumer()
-        print("Ouverture porte")
+        #print("Ouverture porte")
         
         while not self.SwitchHaut.LectureCapteur() == True:
             time.sleep(0.5)
@@ -55,7 +55,7 @@ class Porte(threading.Thread):
         
     def Fermer(self):
         #self.Moteur_porte.backward()
-        print("Fermeture porte")
+        #print("Fermeture porte")
         self.led_backward.Allumer()
         
         while not self.SwitchBas.LectureCapteur() == True:

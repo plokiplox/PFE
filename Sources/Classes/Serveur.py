@@ -8,12 +8,21 @@ from Classes.Poulailler import Poulailler
 import paho.mqtt.client as mqtt
 import time
 
+'''
+    Pour l'application sur Android nous allons utiliser IoT MQTT Panel : https://play.google.com/store/apps/details?id=snr.lab.iotmqttpanel.prod
+    Car cette application nous permet de faire des graphiques et aussi nous permet d'exporter les
+    configurations faites (pas besoin de les refaires pour chaque téléphone).
+'''
+
 # Fonction est appelée lors de la connection d'un client
 def on_connect(client, userdata, flags, rc):
-    print("Result from connect: {}".format(mqtt.connack_string(rc)))
-    # Check whether the result form connect is the CONNACK_ACCEPTED connack code
-    if rc != mqtt.CONNACK_ACCEPTED:
-        raise IOError("Couldn't establish a connection with the MQTT server")
+    # On check la réponse du serveur pour que ça soit correcte
+    if rc == 0:
+        client.connected_flag = True
+        print("Vous êtes maintenant connecté: {}".format(mqtt.connack_string(rc)))
+    else:
+        raise IOError("La connection au serveur MQTT à retournée l'erreur suivante :{}".format(mqtt.connack_string(rc)))
+    pass
 
 # Fonction qui sera utilisée pour publier les messages
 def publish_value(client, topic, value):
@@ -43,7 +52,28 @@ class Serveur:
         # On change la fonction on_connect du client pour la notre
         self._client.on_connect = on_connect
         #On se connecte au broker
-        self.connect(host=self.broker_address,port=self.breker_port)
+        print("Connecting ...")
+        self._client.connect(host=self.broker_address,port=self.breker_port)
         self._client.loop_start()
+        
+        i=0
+        while i!=10:
+            self.PublierPoulailler()
+            i+=1
+            time.sleep(2)
+            continue
+        
+        print("Déconnecté")
+        self._client.disconnect()
+        self._client.loop_stop()
+        
+    def PublierPoulailler(self):
+        publish_value(self._client, "Temp_In", self._Poulailler._Distribution_Eau.CTemp_Reservoire.GetTemperature())
+        publish_value(self._client, "Temp_Out", self._Poulailler._Distribution_Eau.CTemp_Canalisation.GetTemperature())
+        print("Publié")
+        
+        
+        
+        
         
         

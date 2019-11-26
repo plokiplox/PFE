@@ -15,6 +15,7 @@ Obscurité =
 
 #from gpiozero import Button, LightSensor, MotionSensor
 #import Adafruit_DHT
+import random
 
 class Capteurs(object):
     '''
@@ -54,12 +55,12 @@ class Temperature(Capteurs):
     def GetTemperature(self):
         #humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.GetIO())
         #return temperature
-        return 23
+        return random.randint(10,30)
     
     def GetHumidity(self):
         #humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.GetIO())
         #return humidity
-        return 13
+        return random.randint(10,15)
     
 class Switch(Capteurs):
     '''

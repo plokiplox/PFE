@@ -42,10 +42,10 @@ class Distribution_Nourriture(threading.Thread):
         
     def DistribuerNourriture(self):
         self.Moteur.Allumer()
-        print("Distribution nourriture")
+        #print("Distribution nourriture")
         time.sleep(self.Quantite_Nourriture)
         self.Moteur.Fermer()
-        print("Arreter la distribution de nourriture")
+        #print("Arreter la distribution de nourriture")
         
     def Actions(self):
         while True:
