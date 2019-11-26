@@ -53,12 +53,6 @@ class Poulailler(object):
         #    i.start()
         #    continue
         
-        self._Porte.join()
-        self._Thermostat.join()
-        self._Pondoires.join()
-        self._Distribution_Eau.join()
-        self._Distribution_Nourriture.join()
-        
         pass
     
     
