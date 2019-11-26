@@ -54,12 +54,12 @@ class Temperature(Capteurs):
     def GetTemperature(self):
         #humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.GetIO())
         #return temperature
-        pass
+        return 23
     
     def GetHumidity(self):
         #humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.GetIO())
         #return humidity
-        pass
+        return 13
     
 class Switch(Capteurs):
     '''
@@ -76,7 +76,7 @@ class Switch(Capteurs):
         
     def LectureCapteur(self):
         #return self.is_held
-        pass
+        return True
         
 class Presence(Capteurs):
     '''
@@ -92,7 +92,7 @@ class Presence(Capteurs):
     
     def LectureCapteur(self):
         #return self.motion_detected
-        pass
+        return True
         
 class Obscurite(Capteurs):
     '''
@@ -108,7 +108,7 @@ class Obscurite(Capteurs):
         
     def LectureCapteur(self):
         #return not self.light_detected
-        pass
+        return True
         
 class Niveau(Capteurs):
     '''
