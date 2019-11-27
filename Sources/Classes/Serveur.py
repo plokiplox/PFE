@@ -57,7 +57,7 @@ class Serveur:
         self._client.loop_start()
         
         i=0
-        while i!=10:
+        while i!=11:
             self.PublierPoulailler()
             i+=1
             time.sleep(2)
@@ -69,7 +69,10 @@ class Serveur:
         
     def PublierPoulailler(self):
         publish_value(self._client, "Temp_In", self._Poulailler._Distribution_Eau.CTemp_Reservoire.GetTemperature())
+        publish_value(self._client, "Humi_In", self._Poulailler._Distribution_Eau.CTemp_Reservoire.GetHumidity())
         publish_value(self._client, "Temp_Out", self._Poulailler._Distribution_Eau.CTemp_Canalisation.GetTemperature())
+        publish_value(self._client, "Humi_Out", self._Poulailler._Distribution_Eau.CTemp_Canalisation.GetHumidity())
+        
         print("Publié")
         
         

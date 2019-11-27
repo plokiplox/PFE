@@ -55,12 +55,12 @@ class Temperature(Capteurs):
     def GetTemperature(self):
         #humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.GetIO())
         #return temperature
-        return random.randint(10,30)
+        return random.randint(20,25)
     
     def GetHumidity(self):
         #humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.GetIO())
         #return humidity
-        return random.randint(10,15)
+        return random.randint(13,15)
     
 class Switch(Capteurs):
     '''
