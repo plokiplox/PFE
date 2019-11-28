@@ -35,25 +35,25 @@ class Thermostat(threading.Thread):
     
     def Rechauffer(self,t):
         self.Heater.Allumer()
-        print("Allumer Heater")
+        #print("Allumer Heater")
         while t < self.Temperature_Max:
             t = self.CTemp.GetTemperature()
-            print("Temperature = ",t)
+            #print("Temperature = ",t)
             time.sleep(self.Delai_temp)
             continue
-        print("Fermer Heater")
+        #print("Fermer Heater")
         self.Heater.Fermer()
         
     def Actions(self):
         while True:
             time.sleep(self.Delai_temp)
             t = self.CTemp.GetTemperature()
-            print("Temperature = ",t)
+            #print("Temperature = ",t)
             if t <= self.Tempearture_Min:
                 self.Rechauffer(t)
-            else:
-                print("Temperature adequate")
-            continue
+            #else:
+                #print("Temperature adequate")
+        #continue
         
     def run(self):
         self.Actions()

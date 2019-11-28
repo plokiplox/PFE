@@ -54,20 +54,20 @@ class Distribution_Eau(threading.Thread):
     def RechaufferCanalisation(self):
         if self.CTemp_Canalisation.GetTemperature() < self.Tempearture_Canalisation_Max:
             self.Heater_Canalisation.Allumer()
-            print("Rechauffer canalisation")
+#             print("Rechauffer canalisation")
             time.sleep(self.Temps_Rechauffage_Canalisation)
             self.Heater_Canalisation.Fermer()
-            print("Arreter rechauffement canalisation")
+#             print("Arreter rechauffement canalisation")
         else:
-            print("Trop chaud pour rechauffer canalisation")
+#             print("Trop chaud pour rechauffer canalisation")
             pass
     
     def RemplirReservoire(self):
         self.Vanne.Allumer()
-        print("Remplir Reservoir")
+#         print("Remplir Reservoir")
         while not self.CNiveau_Haut.LectureCapteur():
             time.sleep(self.Delai_temps_remplissage)
-        print("Reservoir plein")
+#         print("Reservoir plein")
         self.Vanne.Fermer()
     
     def Actions(self):

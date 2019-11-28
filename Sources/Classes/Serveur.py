@@ -5,6 +5,8 @@ Created on Nov. 12, 2019
 '''
 
 from Classes.Poulailler import Poulailler
+from Classes.enums import EtatPorte, ModePorte
+import threading
 import paho.mqtt.client as mqtt
 import time
 
@@ -36,42 +38,72 @@ class Serveur:
     # Informations sur le MQTT Broker que nous allons utiliser
     # pour une liste complète de broker publics visiter : https://github.com/mqtt/mqtt.github.io/wiki/public_brokers
     broker_address = "broker.hivemq.com"
-    breker_port = 1883
+    broker_port = 1883
     
     _client = mqtt.Client(protocol=mqtt.MQTTv311)
     _Poulailler = Poulailler()
+    _thread_Publish = threading.Thread()
 
     def __init__(self):
         '''
         Constructor
         '''
         
-    def __start__(self):
-        # On start tout les threads du poulailler
-        self._Poulailler.InitialisationThreads()
-        # On change la fonction on_connect du client pour la notre
-        self._client.on_connect = on_connect
-        #On se connecte au broker
-        print("Connecting ...")
-        self._client.connect(host=self.broker_address,port=self.breker_port)
-        self._client.loop_start()
+    def PublishInit(self):
+        publish_value(self._client, "switch_porte", self._Poulailler._Porte.GetEtat())
+        publish_value(self._client, "mode_porte", self._Poulailler._Porte.Mode)
         
+    def BouclePublish(self):
         for i in range(0,60):
             self.PublierPoulailler()
             print("Publié ",i)
-            time.sleep(10)
+            time.sleep(5)
             continue
-        
-        print("Déconnecté")
-        self._client.disconnect()
-        self._client.loop_stop()
         
     def PublierPoulailler(self):
         publish_value(self._client, "Temp_In", self._Poulailler._Distribution_Eau.CTemp_Reservoire.GetTemperature())
         publish_value(self._client, "Temp_Out", self._Poulailler._Distribution_Eau.CTemp_Canalisation.GetTemperature())
         publish_value(self._client, "Humi_In", self._Poulailler._Distribution_Eau.CTemp_Reservoire.GetHumidity())
         publish_value(self._client, "Humi_Out", self._Poulailler._Distribution_Eau.CTemp_Canalisation.GetHumidity())
+        publish_value(self._client, "Etat_porte", self._Poulailler._Porte.GetEtat())
         publish_value(self._client, "Compte_Oeufs", self._Poulailler._Pondoires.Compte)
+        
+    def on_message(self, client, userdata, message):
+        payload = int(message.payload.decode("utf-8"))
+        topic = str(message.topic)
+        if message.topic == "mode_porte":
+            self._Poulailler._Porte.Mode = payload
+        else:
+            if message.topic == "switch_porte" and self._Poulailler._Porte.Mode == ModePorte.Manuel.value:
+                if self._Poulailler._Porte.GetEtat() == EtatPorte.Ferme.value:
+                    print("Forcer fermeture porte")
+                    self._Poulailler._Porte.Ouvrir()
+                else:
+                    print("Forcer ouverture porte")
+                    self._Poulailler._Porte.Fermer()                
+                        
+    def __start__(self):
+        # On start tout les threads du poulailler
+        self._Poulailler.InitialisationThreads()
+        self._thread_Publish.run = self.BouclePublish
+        # On change la fonction on_connect du client pour la notre
+        self._client.on_connect = on_connect
+        self._client.on_message = self.on_message
+        #On se connecte au broker
+        print("Connecting ...")
+        self._client.connect(host=self.broker_address,port=self.broker_port)
+        self.PublishInit()
+        
+        self._client.loop_start()
+        self._client.subscribe("switch_porte")
+        self._client.subscribe("mode_porte")
+        self._thread_Publish.start()
+            
+        while True:
+            continue
+            
+        self._client.loop_stop()
+
         
         
         

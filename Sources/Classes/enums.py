@@ -16,8 +16,12 @@ class Direction(Enum):
     Fermeture = False
     
 class EtatPorte(Enum):
-    Ouvert = True
-    Ferme = False
+    Ouvert = 1
+    Ferme = 0
+    
+class ModePorte(Enum):
+    Automatique = 1
+    Manuel = 0
     
 class Niveaux(Enum):
     Haut = True

@@ -33,7 +33,7 @@ class Pondoire(threading.Thread):
         while(True):
             if self.CPresence.LectureCapteur():
                 self.IncrementerCompte()
-                print("Compte ", self.Compte)
+                #print("Compte ", self.Compte)
                 time.sleep(self.TimeoutCompteur)
             else:
                 continue
