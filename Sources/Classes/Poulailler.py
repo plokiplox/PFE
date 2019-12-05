@@ -18,7 +18,7 @@ class Poulailler(object):
     La porte ne dois pas ouvrir si le thermomètre de dehors est à -5 degré
     '''
     
-    #_Camera = Camera()
+    _Camera = Camera()
     
     # Thermostat(IO_CapteurTemperature, IO_ElementChauffant)
     _Thermostat = Thermostat(4,10)

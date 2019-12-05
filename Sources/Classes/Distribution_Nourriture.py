@@ -20,7 +20,7 @@ class Distribution_Nourriture(threading.Thread):
     Niveau_Nourriture = Niveaux.Haut
     
     Heure_premier_repas = 6  # 6 heure du matin
-    Heure_dernier_repas = 19 # 7 heure du soir
+    Heure_dernier_repas = 21 # 7 heure du soir
     
     # Compté en secondes 
     Quantite_Nourriture = 5

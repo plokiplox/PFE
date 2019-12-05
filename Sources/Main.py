@@ -9,8 +9,7 @@ Created on Oct. 15, 2019
 from Classes.Serveur import Serveur
 
 if __name__ == '__main__':
-    
-    
+        
     A = Serveur()
     A.__start__()
     
