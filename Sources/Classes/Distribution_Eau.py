@@ -19,8 +19,8 @@ class Distribution_Eau(threading.Thread):
     Niveau_Eau = Niveaux.Haut
     # Degré Celsius
     Tempearture_Canalisation_Max = 25
-    Tempearture_Reservoire_Min = 23
-    Temperature_Reservoire_Max = 24
+    Tempearture_Reservoire_Min = 20
+    Temperature_Reservoire_Max = 22
     # Secondes
     Temps_Rechauffage_Canalisation = 10
     Delai_temps_heater = 5

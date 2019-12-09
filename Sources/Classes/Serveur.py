@@ -90,6 +90,7 @@ class Serveur:
         self._client.loop_start()
         publish_value(self._client, "camera_poulailler", self._Poulailler._Camera.ImgToByteArray())
         self._client.loop_stop()
+        #pass
         
     def on_message(self, client, userdata, message):
         payload = int(message.payload.decode("utf-8"))
@@ -102,10 +103,8 @@ class Serveur:
             self._Poulailler._Porte.Mode = payload
         elif message.topic == "switch_porte" and self._Poulailler._Porte.Mode == ModePorte.Manuel.value:
             if self._Poulailler._Porte.GetEtat() == EtatPorte.Ferme.value:
-                print("Forcer fermeture porte")
                 self._Poulailler._Porte.Ouvrir()
             else:
-                print("Forcer ouverture porte")
                 self._Poulailler._Porte.Fermer()
                         
     def __start__(self):
@@ -122,14 +121,14 @@ class Serveur:
         self._client.connect(host=self.broker_address,port=self.broker_port)
         self.PublishInit()
         
-        
+        #self._client.loop_start()
         self._client.subscribe("switch_porte")
         self._client.subscribe("mode_porte")
         self._client.subscribe("reset_compte_oeufs")
         self._thread_Publish_Restant.start()
         self._thread_Publish_Camera.start()
         self._thread_Publish_TempHumi.start()
-            
+        #self._client.loop_stop()
         
         while True:
             continue
